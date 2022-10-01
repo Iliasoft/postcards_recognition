@@ -1,0 +1,5 @@
+from .abstract_image_comparator import AbstractImageComparator
+from .OpenAIImageComparator import OpenAIImageComparator
+from .OpenCVHistogramBasedImageComparator import OpenCVHistogramBasedImageComparator
+from .OpenCVTemplateBasedImageComparator import OpenCVTemplateBasedImageComparator
+from .SIFTImageComparator import SIFTImageComparator

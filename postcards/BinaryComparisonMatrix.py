@@ -1,6 +1,4 @@
-
 class BinaryComparisionMatrix:
-
     @staticmethod
     def get_pairs(images_to_compare):
         list_of_images = list(images_to_compare)
@@ -11,4 +9,3 @@ class BinaryComparisionMatrix:
                 pairs.append((list_of_images[outer_idx], list_of_images[inner_idx]))
 
         return pairs
-

@@ -1,13 +1,13 @@
 #  https://github.com/openai/CLIP/blob/main/notebooks/Interacting_with_CLIP.ipynb
-from ImageComparator import ImageComparator
-import torch
 import clip
 import numpy as np
+import torch
 from PIL import Image
 
+from .abstract_image_comparator import AbstractImageComparator
 
-class OpenAIImageComparator(ImageComparator):
 
+class OpenAIImageComparator(AbstractImageComparator):
     @staticmethod
     def get_similarity_score(images, full_path_resolver_function):
 
@@ -22,7 +22,9 @@ class OpenAIImageComparator(ImageComparator):
                     )
                 )
             except OSError:
-                print("skipping image due to disk error", full_path_resolver_function(image))
+                print(
+                    "skipping image due to disk error", full_path_resolver_function(image)
+                )
                 continue
 
         image_input = torch.tensor(np.stack(preprocessed_images)).cuda()

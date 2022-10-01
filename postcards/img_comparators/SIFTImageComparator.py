@@ -1,15 +1,15 @@
 # https://docs.opencv.org/3.4/da/df5/tutorial_py_sift_intro.html
 # https://docs.opencv.org/3.4/dc/dc3/tutorial_py_matcher.html
-from tqdm import tqdm
-import numpy as np
-
-from ImageComparator import ImageComparator
 import cv2 as cv
-from BinaryComparisonMatrix import BinaryComparisionMatrix
+import numpy as np
+from tqdm import tqdm
+
+from postcards.BinaryComparisonMatrix import BinaryComparisionMatrix
+
+from .abstract_image_comparator import AbstractImageComparator
 
 
-class SIFTImageComparator(ImageComparator):
-
+class SIFTImageComparator(AbstractImageComparator):
     @staticmethod
     def get_similarity_score(images, full_path_resolver_function):
 
@@ -27,13 +27,13 @@ class SIFTImageComparator(ImageComparator):
             sift = cv.SIFT_create()
             kp, des = sift.detectAndCompute(image, None)
 
-            '''
+            """
             # SURF Option
             surf = cv.xfeatures2d.SURF_create(400)
             surf.setUpright(True)
             surf.setExtended(True)
             kp, des = surf.detectAndCompute(image, None)
-            '''
+            """
             ####################################################
             images_descriptors.append(des)
 
@@ -45,7 +45,9 @@ class SIFTImageComparator(ImageComparator):
         pairs = BinaryComparisionMatrix.get_pairs(np.arange(len(images)))
         for pair in tqdm(pairs):
 
-            matches = flann.knnMatch(images_descriptors[pair[0]], images_descriptors[pair[1]], k=2)
+            matches = flann.knnMatch(
+                images_descriptors[pair[0]], images_descriptors[pair[1]], k=2
+            )
             positive_matches = 0
             for m, n in matches:
                 positive_matches += 1 if m.distance < threshold * n.distance else 0

@@ -1,7 +1,5 @@
-from abc import ABC, abstractmethod
-
-
-class ImageComparator(ABC):
+class AbstractImageComparator:
+    """Just abstract class for all comparators"""
 
     @staticmethod
     def get_similarity_score(images, full_path_resolver_function=None):
